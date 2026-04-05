@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Explore | Digital Gallery{% endblock %}
+
+{% block content %}
+<div class="feed-container">
+    <header class="settings-header feed-header">
+        <h1 class="auth-header neon-text">DIGITAL FEED</h1>
+        <div class="status-indicator">
+            <span class="neon-dot-blue pulse">●</span> 
+            <span class="status-text">LIVE DISCOVERIES</span>
+        </div>
+    </header>
+
+    <div id="image-list" class="masonry-grid-layout">
+        {% include "images/image/list_images.html" %}
+    </div>
+
+    <div id="loading-sentinel" class="loading-state" style="display: none;">
+        <div class="scanner-line"></div>
+        <p class="loading-text">SCANNING DATABASE...</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block domready %}
+  var page = 1;
+  var emptyPage = false;
+  var blockRequest = false;
+  
+  const loadingSentinel = document.getElementById('loading-sentinel');
+
+  window.addEventListener('scroll', function(e) {
+    var margin = document.body.clientHeight - window.innerHeight - 200;
+    
+    if(window.pageYOffset > margin && !emptyPage && !blockRequest) {
+      blockRequest = true;
+      page += 1;
+      
+      // Show high-tech loading state
+      loadingSentinel.style.display = 'block';
+      
+      fetch('?images_only=1&page=' + page)
+      .then(response => response.text())
+      .then(html => {
+        loadingSentinel.style.display = 'none'; // Hide when done
+        
+        if (html.trim() === '') {
+          emptyPage = true;
+        }
+        else {
+          var imageList = document.getElementById('image-list');
+          imageList.insertAdjacentHTML('beforeend', html);
+          blockRequest = false;
+        }
+      })
+      .catch(error => {
+        console.error('Fetch error:', error);
+        loadingSentinel.style.display = 'none';
+        blockRequest = false;
+      });
+    }
+  });
+  
+  // Initial check to fill screen
+  window.dispatchEvent(new Event('scroll'));
+{% endblock %}

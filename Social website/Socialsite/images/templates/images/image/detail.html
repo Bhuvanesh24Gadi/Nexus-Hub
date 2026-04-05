@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block title %}{{ image.title }} | Explore{% endblock %}
+
+{% block content %} 
+<div class="image-detail-wrapper">
+    <header class="detail-header">
+        <h1 class="neon-text-blue">{{ image.title }}</h1>
+        <div class="view-count-badge glass-panel">
+            <span class="icon">👁️</span> {{ total_views }} View{{ total_views|pluralize }}
+        </div>
+    </header>
+
+    {% with total_likes=image.users_like.count users_like=image.users_like.all %}
+    <div class="image-grid-layout">
+        
+        <div class="media-stage glass-panel">
+            <div class="image-container-glow">
+                <a href="{{ image.image.url }}" class="main-image-link">
+                    <img src="{% thumbnail image.image 600x0 %}" class="main-image-content" alt="{{ image.title }}">
+                </a>
+            </div>
+            
+            <div class="image-description-box">
+                <p class="description-text">{{ image.description|linebreaks }}</p>
+            </div>
+        </div>
+
+        <aside class="interaction-sidebar">
+            <div class="stats-card glass-panel">
+                <div class="like-control-center">
+                    <div class="like-stat">
+                        <span class="total-count neon-text-purple">{{ total_likes }}</span>
+                        <span class="label">Liker{{ total_likes|pluralize }}</span>
+                    </div>
+                    
+                    <a href="#" data-id="{{ image.id }}" data-action="{% if request.user in users_like %}unlike{% else %}like{% endif %}" class="like-button-neon {% if request.user in users_like %}active{% endif %}">
+                        <span class="btn-text">{% if request.user not in users_like %}Like{% else %}Unlike{% endif %}</span>
+                        <span class="btn-glow"></span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="activity-card glass-panel">
+                <h3 class="sidebar-title">Digital Appreciation</h3>
+                <div class="face-pile">
+                    {% for user in image.users_like.all %}
+                    <div class="user-chip-mini" title="{{ user.first_name }}">
+                        {% if user.profile.photo %}
+                            <img src="{{ user.profile.photo.url }}" alt="{{ user.first_name }}" class="circle-profile-border">
+                        {% else %}
+                            <div class="default-avatar">{{ user.username|slice:":1"|upper }}</div>
+                        {% endif %}
+                    </div>
+                    {% empty %}
+                    <p class="empty-state-text">No data points yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </aside>
+
+    </div>
+    {% endwith %}
+</div>
+{% endblock %}
+
+{% block domready %}
+  const url = '{% url "images:like" %}';
+  var options = {
+    method: 'POST',
+    headers: {'X-CSRFToken': csrftoken},
+    mode: 'same-origin'
+  }
+  
+  document.querySelector('a.like-button-neon').addEventListener('click', function(e){
+    e.preventDefault();
+    var likeButton = this;
+    var btnText = likeButton.querySelector('.btn-text');
+    
+    var formData = new FormData();
+    formData.append('id', likeButton.dataset.id);
+    formData.append('action', likeButton.dataset.action);
+    options['body'] = formData;
+    
+    fetch(url, options)
+    .then(response => response.json())
+    .then(data => {
+      if (data['status'] === 'ok') {
+        var previousAction = likeButton.dataset.action;
+        var action = previousAction === 'like' ? 'unlike' : 'like';
+        
+        // Update data attribute and text
+        likeButton.dataset.action = action;
+        btnText.innerHTML = action === 'like' ? 'Like' : 'Unlike';
+        
+        // Toggle visual active state
+        likeButton.classList.toggle('active');
+    
+        // Update like count with neon animation trigger
+        var likeCount = document.querySelector('.total-count');
+        var totalLikes = parseInt(likeCount.innerHTML);
+        likeCount.innerHTML = previousAction === 'like' ? totalLikes + 1 : totalLikes - 1;
+      }
+    })
+  });
+{% endblock %}

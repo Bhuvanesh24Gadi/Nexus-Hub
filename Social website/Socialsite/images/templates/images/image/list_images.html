@@ -1,0 +1,26 @@
+{% load thumbnail %}
+
+{% for image in images %}
+  <div class="image-card-wrapper">
+    <div class="image-card glass-panel">
+        <a href="{{ image.get_absolute_url }}" class="card-link">
+            <div class="image-zoom-container">
+                <img src="{% thumbnail image.image 300x300 crop='smart' %}" class="grid-image" alt="{{ image.title }}">
+            </div>
+            
+            <div class="card-overlay">
+                <div class="overlay-content">
+                    <h3 class="card-title neon-text-blue">{{ image.title }}</h3>
+                    <div class="card-stats">
+                        <span class="stat-item">
+                            <span class="icon">❤️</span> {{ image.users_like.count }}
+                        </span>
+                        <span class="view-tag">VIEW DETAILS</span>
+                    </div>
+                </div>
+                <div class="corner-glow"></div>
+            </div>
+        </a>
+    </div>
+</div>
+{% endfor %}

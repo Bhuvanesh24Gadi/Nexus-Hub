@@ -1,0 +1,1435 @@
+/* =========================================
+   1. PREMIUM DARK THEME VARIABLES
+   ========================================= */
+:root {
+    /* Backgrounds: Deep space palette */
+    --bg-main: #0a0a0c;
+    --bg-card: rgba(255, 255, 255, 0.03);
+    --bg-header: rgba(10, 10, 12, 0.8);
+    
+    /* Accents: Hyper-Purple & Cyan */
+    --accent: #8b5cf6;
+    --accent-hover: #a78bfa;
+    --accent-glow: rgba(139, 92, 246, 0.5);
+    --accent-cyan: #06b6d4;
+    
+    /* Text */
+    --text-primary: #f9fafb;
+    --text-secondary: #94a3b8;
+    --text-dim: #64748b;
+
+    /* Borders & Glass */
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shine: rgba(255, 255, 255, 0.12);
+
+    /* Transitions & Curves */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.2s ease;
+}
+
+/* =========================================
+   2. CORE RESET & ANIMATIONS
+   ========================================= */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glowPulse {
+    0% { box-shadow: 0 0 5px var(--accent-glow); }
+    50% { box-shadow: 0 0 20px var(--accent-glow); }
+    100% { box-shadow: 0 0 5px var(--accent-glow); }
+}
+
+body {
+    margin: 0;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background-image: 
+        radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 0% 100%, rgba(6, 182, 212, 0.03) 0%, transparent 40%);
+    background-attachment: fixed;
+}
+
+/* =========================================
+   3. NAVIGATION (Perfected for nav-content)
+   ========================================= */
+#header {
+    background: var(--bg-header);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--glass-border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* The true flex container based on your HTML */
+.nav-content {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    padding: 1.2rem 3rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Logo Styling */
+.nav-content .logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    background: linear-gradient(to right, var(--accent), var(--accent-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+}
+
+/* Menu Container Layout */
+.menu-container ul.menu {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 40px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-container ul.menu li.nav-item a {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 1.15rem;
+    position: relative;
+    padding: 5px 0;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.menu-container ul.menu li.nav-item a:hover,
+.menu-container ul.menu li.nav-item.selected a {
+    color: var(--text-primary);
+}
+
+/* User Controls (Greeting + Logout Form) */
+.user-controls {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 20px;
+    white-space: nowrap;
+}
+
+.user-greeting {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+.user-greeting .accent-color {
+    color: var(--accent-cyan);
+    font-weight: bold;
+}
+
+/* Fix for the Logout Form wrapper */
+.inline-form {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Logout/Login Button Styling */
+.btn-logout-neon, .btn-login-glow {
+    background: var(--accent);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.btn-logout-neon:hover, .btn-login-glow:hover {
+    background: var(--accent-hover);
+    box-shadow: 0 0 15px var(--accent-glow);
+}
+
+/* Fixes Mobile View */
+@media (max-width: 1024px) {
+    .nav-content {
+        padding: 1rem;
+        flex-wrap: wrap !important;
+        gap: 20px;
+        justify-content: center !important;
+    }
+}
+
+/* =========================================
+   4. CONTENT CONTAINERS
+   ========================================= */
+.content-glass-card {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 40px;
+    margin: 40px auto;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.glass-panel {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 20px;
+    transition: var(--transition-smooth);
+}
+
+.glass-panel:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--glass-shine);
+}
+
+/* =========================================
+   5. IMAGE CARDS (Masonry/Grid)
+   ========================================= */
+.masonry-grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.image-card-wrapper {
+    perspective: 1000px;
+}
+
+.image-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                box-shadow 0.4s ease;
+}
+
+.image-card:hover {
+    transform: translateY(-10px) rotateX(2deg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px var(--accent-glow);
+    border-color: var(--accent);
+}
+
+.grid-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.image-card:hover .grid-image {
+    transform: scale(1.1);
+}
+
+.card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+}
+
+.image-card:hover .card-overlay {
+    opacity: 1;
+}
+
+/* =========================================
+   6. PROFILE & PEOPLE (Glow Rounds)
+   ========================================= */
+.circle-profile-border {
+    border-radius: 50%;
+    border: 2px solid var(--glass-border);
+    padding: 4px;
+    transition: var(--transition-smooth);
+}
+
+.user-node-card:hover .circle-profile-border {
+    border-color: var(--accent);
+    box-shadow: 0 0 15px var(--accent-glow);
+    transform: rotate(5deg);
+}
+
+/* =========================================
+   7. INTERACTIVE BUTTONS & FORMS
+   ========================================= */
+.btn-primary-neon, button[type="submit"] {
+    background: var(--accent);
+    color: white;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.btn-primary-neon:hover, button[type="submit"]:hover {
+    background: var(--accent-hover);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px var(--accent-glow);
+}
+
+.btn-primary-neon:active {
+    transform: translateY(0);
+}
+
+/* Modern Input Styling */
+input[type="text"], input[type="password"], input[type="email"], textarea {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    color: white;
+    padding: 14px 18px;
+    border-radius: 12px;
+    transition: var(--transition-fast);
+    font-size: 1rem;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-glow);
+}
+
+/* =========================================
+   8. UTILITIES
+   ========================================= */
+.neon-text-blue {
+    color: var(--accent-cyan);
+    text-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+}
+
+.pulse {
+    animation: glowPulse 2s infinite ease-in-out;
+}
+
+.text-muted { color: var(--text-dim); font-size: 0.9rem; }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .content-glass-card { padding: 20px; margin: 20px 10px; }
+    .masonry-grid-layout { grid-template-columns: 1fr; }
+}
+
+/* =========================================
+   9. IMAGE DETAIL VIEW (Side-by-Side & Buttons)
+   ========================================= */
+
+/* 1. The Side-by-Side Layout */
+.image-grid-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Image gets 66% width, Sidebar gets 33% */
+    gap: 30px;
+    align-items: start; /* Prevents sidebar from stretching to match tall images */
+    margin-top: 20px;
+}
+
+/* Ensure the image scales properly inside its new column */
+.main-image-content {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    display: block;
+}
+
+/* 2. The Like Section Layout */
+.like-control-center {
+    display: flex;
+    justify-content: space-between; /* Pushes count to the left, button to the right */
+    align-items: center;
+}
+
+.like-stat {
+    display: flex;
+    flex-direction: column;
+}
+
+.like-stat .total-count {
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.like-stat .label {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 5px;
+}
+
+/* 3. The Premium Like Button Box */
+.like-button-neon {
+    background: rgba(139, 92, 246, 0.1); /* Slight translucent purple */
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: var(--transition-smooth);
+    display: inline-block;
+}
+
+.like-button-neon:hover {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 0 20px var(--accent-glow);
+    transform: translateY(-2px);
+}
+
+/* Active State (When you have already liked it) */
+.like-button-neon.active {
+    background: transparent;
+    border-color: var(--text-dim);
+    color: var(--text-secondary);
+}
+
+.like-button-neon.active:hover {
+    border-color: var(--accent-hover);
+    color: var(--text-primary);
+}
+
+/* 4. Responsive Mobile View */
+@media (max-width: 900px) {
+    /* Stack them vertically again on phones/small tablets */
+    .image-grid-layout {
+        grid-template-columns: 1fr; 
+    }
+}
+
+/* =========================================
+   10. ENHANCED ACTIVITY FEED (INCREASED SIZE)
+   ========================================= */
+
+/* Increase the overall card size and spacing */
+.action-event-card {
+    padding: 25px !important;
+    margin-bottom: 25px !important;
+    display: flex;
+    gap: 25px; /* More space between images and text */
+    align-items: center;
+}
+
+/* Make the User Avatar bigger */
+.actor-avatar .circle-profile-border, 
+.actor-avatar .default-avatar-mini {
+    width: 100px !important; /* Was 80px */
+    height: 100px !important;
+    border-width: 3px;
+}
+
+/* Make the Target Image (Bookmarked/Liked Image) bigger */
+.target-asset .item-img-square {
+    width: 120px !important; /* Was 80px */
+    height: 120px !important;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+}
+
+/* Increase font sizes for the text next to images */
+.event-info {
+    flex: 1;
+}
+
+.event-time {
+    font-size: 1rem !important; /* Bigger timestamp */
+    margin-bottom: 8px;
+    display: block;
+}
+
+.event-description {
+    font-size: 1.25rem !important; /* Bigger action text */
+    line-height: 1.4;
+}
+
+.event-description a {
+    font-weight: 700;
+}
+
+/* Adjust the connector line to match bigger icons */
+.action-connector {
+    height: 2px;
+    width: 30px;
+    background: var(--glass-border);
+    margin: 0 10px;
+}
+
+/* =========================================
+   11. PEOPLE GRID LAYOUT (SIDE-BY-SIDE)
+   ========================================= */
+
+.people-grid-layout {
+    display: grid !important;
+    /* This creates as many columns as will fit, with a minimum width of 280px */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+    gap: 30px !important;
+    padding: 20px 0;
+    width: 100%;
+}
+
+/* Ensure the cards look uniform in the grid */
+.user-node-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-height: 350px; /* Gives them a consistent height */
+    justify-content: space-between;
+}
+
+/* Center the content inside the node link */
+.node-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* Adjust the info section for better vertical spacing */
+.node-info {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* View Profile Button Box */
+.btn-mini-glow {
+    background: rgba(6, 182, 212, 0.1);
+    border: 1px solid var(--accent-cyan);
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 10px;
+    transition: var(--transition-smooth);
+}
+
+.btn-mini-glow:hover {
+    background: var(--accent-cyan);
+    color: #000;
+    box-shadow: 0 0 15px var(--accent-cyan);
+}
+
+/* =========================================
+   12. PREMIUM FOLLOW BUTTON STYLING
+   ========================================= */
+
+.follow-btn-neon {
+    background: rgba(6, 182, 212, 0.1); /* Translucent Cyan */
+    color: var(--accent-cyan);
+    border: 1px solid var(--accent-cyan);
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    text-decoration: none;
+    display: inline-block;
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.follow-btn-neon:hover {
+    background: var(--accent-cyan);
+    color: #000;
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+    transform: translateY(-2px);
+}
+
+/* Active/Unfollow State */
+.follow-btn-neon.active {
+    background: rgba(157, 80, 187, 0.1); /* Translucent Purple */
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.follow-btn-neon.active:hover {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* The Glow Effect behind the text */
+.btn-glow {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.follow-btn-neon:hover .btn-glow {
+    left: 100%;
+}
+
+/* =========================================
+   13. PROFILE DETAIL REFINEMENT
+   ========================================= */
+
+/* The main container for the profile info */
+.profile-hero {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 30px !important;
+    gap: 40px;
+}
+
+/* Groups the Avatar and Text together */
+.profile-main-info {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    flex: 1;
+}
+
+/* Small, compact stat badges */
+.stats-row {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 15px !important;
+    margin-top: 10px;
+}
+
+.stat-badge.glass-panel {
+    padding: 10px 20px !important; /* Smaller padding */
+    width: auto !important; /* Stops full-width stretch */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.stat-badge .total-count {
+    font-size: 1.2rem !important; /* Smaller number */
+}
+
+.stat-badge .stat-label {
+    font-size: 0.8rem !important;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+/* Ensures the Follow button stays on the same line */
+.profile-actions {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* Pushes button to the far right */
+}
+
+/* Adjust Follow Button Size to match new compact look */
+.follow-btn-neon {
+    padding: 10px 30px !important;
+    font-size: 0.9rem !important;
+    white-space: nowrap; /* Prevents text from breaking */
+}
+
+/* Responsive adjustment for Mobile */
+@media (max-width: 768px) {
+    .profile-hero {
+        flex-direction: column !important;
+        text-align: center;
+    }
+    .profile-main-info {
+        flex-direction: column;
+    }
+    .profile-actions {
+        margin-left: 0;
+        margin-top: 20px;
+    }
+}
+
+/* =========================================
+   14. EDIT PROFILE BUTTON (GLASS STYLE)
+   ========================================= */
+
+.btn-secondary-glass {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    border: 1px solid var(--glass-border);
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    display: inline-block;
+    transition: var(--transition-smooth);
+    backdrop-filter: blur(4px);
+    white-space: nowrap;
+}
+
+.btn-secondary-glass:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-hover);
+    color: var(--accent-hover);
+    box-shadow: 0 0 20px rgba(167, 139, 250, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Add a small icon effect if you like */
+.btn-secondary-glass::before {
+    content: '⚙️';
+    margin-right: 8px;
+    font-size: 0.9rem;
+}
+
+/* =========================================
+   15. COMMAND CENTER (DASHBOARD) GRID
+   ========================================= */
+
+/* The main container for the dashboard sections */
+.dashboard-grid {
+    display: grid !important;
+    /* Split into two equal columns */
+    grid-template-columns: 1fr 1fr !important;
+    gap: 30px !important;
+    margin-top: 30px;
+}
+
+/* Ensure the top stats bar stays full width */
+.stats-summary-bar {
+    grid-column: 1 / -1; /* Spans across both columns */
+    margin-bottom: 10px;
+}
+
+/* Make the individual cards have a consistent height */
+.dashboard-grid .glass-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    min-height: 200px;
+}
+
+/* Style the Capture Link and Edit Profile links as buttons */
+.dashboard-grid a {
+    color: var(--accent-cyan);
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    padding: 8px 15px;
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    border-radius: 6px;
+    display: inline-block;
+    transition: var(--transition-smooth);
+    width: fit-content;
+}
+
+.dashboard-grid a:hover {
+    background: rgba(6, 182, 212, 0.1);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 15px var(--accent-cyan);
+}
+
+/* Mobile Responsive: Stack them on small screens */
+@media (max-width: 900px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* =========================================
+   16. COMMAND CENTER ADVANCED LAYOUT
+   ========================================= */
+
+/* Top Row: 3 Equal Columns */
+.top-system-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 20px !important;
+    margin-bottom: 40px;
+}
+
+.top-system-grid .glass-panel {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    min-height: 150px;
+}
+
+/* Activity Feed: 2 Equal Columns */
+.activity-2col-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 25px !important;
+    width: 100%;
+}
+
+/* Ensure activity cards inside the 2-col grid look clean */
+.activity-2col-grid .action-event-card {
+    margin-bottom: 0 !important; /* Grid handles spacing now */
+    height: 100%;
+}
+
+/* UI Elements */
+.session-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 10px 0;
+    color: var(--accent-cyan);
+}
+
+.status-tag {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: #10b981;
+    border: 1px solid #10b981;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 1024px) {
+    .top-system-grid {
+        grid-template-columns: 1fr 1fr !important; /* 2 on tablets */
+    }
+}
+
+@media (max-width: 768px) {
+    .top-system-grid, .activity-2col-grid {
+        grid-template-columns: 1fr !important; /* Stacked on phones */
+    }
+}
+
+/* Top Grid: 3 Columns */
+.top-system-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 20px !important;
+    margin-bottom: 40px;
+}
+
+/* Activity Feed: 2 Columns */
+.activity-2col-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 25px !important;
+    width: 100%;
+}
+
+/* Ensure empty state spans both columns */
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* Centering the top panel contents */
+.top-system-grid .glass-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    min-height: 160px;
+}
+
+.mini-stats {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 5px;
+    letter-spacing: 1px;
+}
+
+/* Mobile Fix */
+@media (max-width: 900px) {
+    .top-system-grid, .activity-2col-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* =========================================
+   17. CINEMATIC DASHBOARD REFINEMENT
+   ========================================= */
+
+/* The 3-Column Top Layout */
+.top-system-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1.5fr 1fr !important; /* Center gets more space */
+    gap: 30px !important;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+/* Center Identity Branding (No Box) */
+.identity-branding {
+    text-align: center;
+    padding: 20px;
+}
+
+.hero-name {
+    font-size: 3.5rem; /* Large, bold name */
+    font-weight: 900;
+    margin: 10px 0;
+    background: linear-gradient(to bottom, #fff 30%, var(--text-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+}
+
+.status-tag {
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    color: var(--accent-cyan);
+    font-weight: 800;
+}
+
+.hero-stats {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.stat-divider {
+    margin: 0 10px;
+    opacity: 0.3;
+}
+
+/* Side Functional Cards */
+.functional-card {
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--glass-border) !important;
+}
+
+/* Sleek Outline Buttons for Security */
+.btn-outline-neon {
+    display: block;
+    width: 80%;
+    text-align: center;
+    margin: 5px 0;
+    padding: 8px;
+    border: 1px solid var(--glass-border);
+    border-radius: 6px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-neon:hover {
+    border-color: var(--accent);
+    color: var(--text-primary);
+    box-shadow: 0 0 15px var(--accent-glow);
+    background: rgba(139, 92, 246, 0.05);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 1024px) {
+    .top-system-grid {
+        grid-template-columns: 1fr !important; /* Stack for mobile */
+        gap: 20px;
+    }
+    .hero-name {
+        font-size: 2.5rem;
+    }
+}
+
+/* =========================================
+   18. LOGIN PAGE REFINEMENT (Centered)
+   ========================================= */
+
+/* Centers the entire login card on the screen */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.login-form-box {
+    max-width: 400px;
+    width: 100%;
+    padding: 40px;
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    backdrop-filter: blur(10px);
+}
+
+/* Social Login Button (Replacing the big logo) */
+.social-login-area {
+    margin-top: 30px;
+    border-top: 1px solid var(--glass-border);
+    padding-top: 20px;
+    text-align: center;
+}
+
+.google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    padding: 12px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition-smooth);
+}
+
+.google-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+}
+
+/* A small, clean SVG icon for Google */
+.google-icon-svg {
+    width: 18px;
+    height: 18px;
+}
+
+.divider-text {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+/* =========================================
+   19. CENTERED LOGIN CARD REFINEMENT
+   ========================================= */
+
+/* Center the entire wrapper on the screen */
+.centered-auth-wrapper {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    min-height: 80vh;
+    padding: 20px;
+}
+
+/* Constrain the login box width */
+.auth-container.glass-panel {
+    max-width: 450px;
+    width: 100%;
+    padding: 40px;
+    text-align: center;
+    border-radius: 24px;
+}
+
+/* Make form labels and inputs stack cleanly */
+.form-fields p {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.full-width {
+    width: 100% !important;
+    justify-content: center;
+}
+
+/* New Google Glass Button */
+.btn-google-glass {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    padding: 12px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition-smooth);
+    margin: 20px 0;
+}
+
+.btn-google-glass:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+}
+
+.google-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* Separator styling */
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+    color: var(--text-dim);
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+}
+
+.separator::before, .separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.separator:not(:empty)::before { margin-right: .5em; }
+.separator:not(:empty)::after { margin-left: .5em; }
+
+/* =========================================
+   20. REGISTER PAGE & MEGA BUTTON
+   ========================================= */
+
+/* Make the registration box slightly wider to fit help text */
+.register-box {
+    max-width: 550px !important;
+}
+
+/* Fixes the "help text" under username to be less messy */
+.registration-fields .helptext {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-bottom: 15px;
+    margin-top: -10px;
+    line-height: 1.2;
+}
+
+/* THE MEGA NEON BUTTON */
+.btn-mega-neon {
+    width: 100%;
+    background: var(--accent);
+    color: white;
+    padding: 20px; /* Much bigger padding */
+    border: none;
+    border-radius: 14px;
+    font-size: 1.2rem; /* Bigger font size */
+    font-weight: 800;
+    letter-spacing: 2px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+    margin-top: 20px;
+}
+
+.btn-mega-neon:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 30px var(--accent-glow);
+    background: var(--accent-hover);
+}
+
+.btn-mega-neon:active {
+    transform: translateY(-1px);
+}
+
+/* The Animated Shimmer Effect */
+.btn-shimmer {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transform: skewX(-25deg);
+    transition: 0.7s;
+}
+
+.btn-mega-neon:hover .btn-shimmer {
+    left: 150%;
+}
+
+/* Centering help for standard Django form paragraphs */
+.registration-fields p {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.registration-fields input {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1.1rem; /* Bigger inputs for easier typing */
+}
+
+/* =========================================
+   21. DIGITAL APPRECIATION (Refined)
+   ========================================= */
+
+/* The overall glass container for the image node */
+.image-detail-card.glass-panel {
+    max-width: 600px; /* Constrains the entire card for a premium feel */
+    margin: 30px auto; /* Centers the card and gives it vertical space */
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+}
+
+/* REDUCED SIZE: Digital Appreciation Header */
+.appreciation-header {
+    margin-bottom: 15px; /* Pulls the header and image closer together */
+    text-align: left; /* Aligns with standard reading patterns */
+}
+
+.appreciation-header .neon-text {
+    font-size: 0.9rem !important; /* SIGNIFICANTLY SMALLER FONT */
+    text-transform: uppercase;
+    letter-spacing: 2px; /* Extra space to keep that digital/tech vibe */
+    color: var(--text-dim); /* Subtler color, letting the neon focus elsewhere */
+    font-weight: 700;
+}
+
+/* Optimization for the main image (keeps it dynamic) */
+.image-detail-wrapper img.main-display-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    border: 2px solid var(--glass-border); /* Subtle border for clean lines */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Deep shadow for depth */
+}
+
+/* User Info Section (Centered below the smaller image) */
+.image-metadata-container {
+    margin-top: 20px;
+    text-align: center;
+    border-top: 1px solid var(--glass-border);
+    padding-top: 15px;
+}
+
+.posted-by-user-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mini-avatar-status {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+}
+
+.posted-text {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+}
+
+.user-node-cyan {
+    color: var(--accent-cyan);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* =========================================
+   22. IMAGE DETAIL SIDEBAR REFINEMENT
+   ========================================= */
+
+/* Shrinks the "Digital Appreciation" text */
+.sidebar-title {
+    font-size: 0.8rem !important; /* Smaller size */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-dim); /* Dimmed color */
+    margin-bottom: 15px;
+    font-weight: 700;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 8px;
+    display: block;
+}
+
+/* Adjust the Face Pile (Likers) spacing */
+.face-pile {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.user-chip-mini img, .default-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--glass-border);
+    transition: var(--transition-smooth);
+}
+
+.user-chip-mini:hover img {
+    border-color: var(--accent-cyan);
+    transform: scale(1.1);
+    box-shadow: 0 0 10px var(--accent-cyan);
+}
+
+/* =========================================
+   23. CENTERED EDIT SETTINGS REFINEMENT
+   ========================================= */
+
+/* Make the edit box wider than the login box */
+.edit-profile-box {
+    max-width: 650px !important; 
+    width: 100%;
+    padding: 40px;
+}
+
+/* Ensure labels and inputs are stacked cleanly */
+.field-group p {
+    text-align: left;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Aligning the buttons side-by-side */
+.form-actions-row {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    width: 100%;
+}
+
+.form-actions-row .btn-primary-neon, 
+.form-actions-row .btn-secondary-glass {
+    flex: 1; /* Both buttons take 50% width */
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+/* Styling the section titles */
+.section-title {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 5px;
+}
+
+/* Fix for standard Django file inputs */
+input[type="file"] {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    color: var(--text-dim);
+}
+
+/* =========================================
+   24. BUTTON CENTERING FIX
+   ========================================= */
+
+/* The container holding your button */
+.form-actions {
+    display: flex !important;
+    justify-content: center !important; /* This is the magic line for horizontal centering */
+    align-items: center;
+    width: 100%;
+    margin-top: 30px;
+}
+
+/* Ensure the mega button doesn't have stray margins pulling it to the side */
+.btn-mega-neon {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%; /* Keeps it responsive */
+    display: block;
+}
+
+/* Optional: Center the "Already have a node?" text below it */
+.auth-footer {
+    text-align: center;
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* =========================================
+   25. RED-THEME LOGOUT (CENTERED)
+   ========================================= */
+
+/* The specific logout box */
+.logout-box {
+    max-width: 450px !important;
+    text-align: center;
+    padding: 50px 40px;
+    border: 1px solid rgba(239, 68, 68, 0.2) !important; /* Subtle red border */
+}
+
+/* Red Neon Text */
+.neon-text-red {
+    color: #ef4444;
+    text-shadow: 0 0 10px rgba(239, 68, 68, 0.5), 0 0 20px rgba(239, 68, 68, 0.3);
+    letter-spacing: 3px;
+}
+
+/* SVG Icon Animation */
+.status-icon-glow {
+    margin-bottom: 25px;
+}
+
+.neon-svg-red {
+    color: #ef4444;
+    filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.6));
+    animation: unlock-pulse 2s infinite ease-in-out;
+}
+
+@keyframes unlock-pulse {
+    0% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.7; }
+}
+
+/* Ensuring the message looks clean */
+.status-message {
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}

@@ -1,0 +1,58 @@
+{% load thumbnail %}
+{% with user=action.user profile=action.user.profile %}
+<div class="action-event-card glass-panel">
+    
+    <div class="event-media">
+        <div class="actor-avatar">
+            {% if profile.photo %}
+                {% thumbnail user.profile.photo "80x80" crop="100%" as im %}
+                <a href="{{ user.get_absolute_url }}" class="avatar-link">
+                    <img src="{{ im.url }}" alt="{{ user.get_full_name }}" class="circle-profile-border glow-purple">
+                </a>
+            {% else %}
+                <div class="default-avatar-mini">{{ user.username|slice:":1"|upper }}</div>
+            {% endif %}
+        </div>
+
+        {% if action.target %}
+            {% with target=action.target %}
+                {% if target.image %}
+                <div class="action-connector">
+                    <span class="connector-line"></span>
+                </div>
+                <div class="target-asset">
+                    {% thumbnail target.image "80x80" crop="100%" as im %}
+                    <a href="{{ target.get_absolute_url }}" class="asset-link">
+                        <img src="{{ im.url }}" class="item-img-square glow-blue">
+                    </a>
+                </div>
+                {% endif %}
+            {% endwith %}
+        {% endif %}
+    </div>
+
+    <div class="event-info">
+        <div class="event-meta">
+            <span class="event-time neon-text-dim">{{ action.created|timesince }} ago</span>
+        </div>
+        
+        <div class="event-description">
+            <a href="{{ user.get_absolute_url }}" class="user-link neon-text-purple">
+                {{ user.first_name|default:user.username }}
+            </a>
+            
+            <span class="action-verb">{{ action.verb }}</span>
+            
+            {% if action.target %}
+                {% with target=action.target %}
+                <a href="{{ target.get_absolute_url }}" class="target-link neon-text-blue">
+                    {{ target }}
+                </a>
+                {% endwith %}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card-corner-accent"></div>
+</div>
+{% endwith %}

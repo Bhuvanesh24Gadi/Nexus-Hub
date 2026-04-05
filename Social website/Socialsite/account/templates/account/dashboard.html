@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Command Center | Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-wrapper">
+    <div class="top-system-grid">
+        
+        <div class="glass-panel functional-card">
+            <h3 class="panel-title neon-text-purple">Security Hub</h3>
+            <div class="account-actions">
+                <a href="{% url 'edit' %}" class="btn-outline-neon">Edit Profile</a>
+                <a href="{% url 'password_change' %}" class="btn-outline-neon">Access Keys</a>
+            </div>
+        </div>
+
+        <div class="identity-branding">
+            <span class="status-tag pulse">SYSTEM ACTIVE</span>
+            <h1 class="hero-name">{{ request.user.first_name|default:request.user.username }}</h1>
+            <div class="hero-stats">
+                <span class="stat-item">{{ request.user.images_created.count }} Assets</span>
+                <span class="stat-divider">|</span>
+                <span class="stat-item">{{ request.user.followers.count }} Connections</span>
+            </div>
+        </div>
+
+        <div class="glass-panel functional-card">
+            <h3 class="panel-title neon-text-emerald">Capture Tool</h3>
+            <div class="bookmarklet-zone">
+                <a href="javascript:(function(){if (!window.bookmarklet){bookmarklet_js=document.body.appendChild(document.createElement('script'));bookmarklet_js.src='https://127.0.0.1:8000/static/js/bookmarklet.js?r='+Math.floor(Math.random()*99999999999999999999);window.bookmarklet=true;}else{bookmarkletLaunch();}})();" 
+                   class="bookmarklet-btn-glow">
+                    🚀 NEURAL LINK
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <main class="dashboard-main">
+        <h2 class="section-title-neon">
+            <span class="neon-dot-purple pulse">●</span> LIVE ACTIVITY STREAM
+        </h2>
+
+        <div id="action-list" class="activity-2col-grid">
+            {% for action in actions %}
+                {% include "actions/action/detail.html" %}
+            {% empty %}
+                <div class="empty-state glass-panel full-width">
+                    <p class="neon-text-dim">No incoming data signals detected.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+</div>
+{% endblock %}

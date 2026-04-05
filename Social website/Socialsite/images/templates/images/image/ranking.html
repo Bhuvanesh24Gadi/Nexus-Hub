@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Leaderboard | Most Viewed{% endblock %}
+
+{% block content %}
+<div class="ranking-container">
+    <header class="settings-header">
+        <h1 class="auth-header neon-text-purple">IMAGE RANKINGS</h1>
+        <p class="auth-subtext">The most engaged digital assets in the network.</p>
+    </header>
+
+    <div class="leaderboard-wrapper glass-panel">
+        <div class="leaderboard-header">
+            <span class="rank-col">RANK</span>
+            <span class="title-col">ASSET TITLE</span>
+            <span class="action-col">STATUS</span>
+        </div>
+
+        <ul class="ranking-list">
+            {% for image in most_viewed %}
+            <li class="ranking-item rank-{{ forloop.counter }}">
+                <div class="rank-number-container">
+                    <span class="rank-badge">#{{ forloop.counter }}</span>
+                </div>
+
+                <div class="rank-title">
+                    <a href="{{ image.get_absolute_url }}" class="rank-link">
+                        {{ image.title }}
+                    </a>
+                </div>
+
+                <div class="rank-action">
+                    <a href="{{ image.get_absolute_url }}" class="btn-mini-neon">
+                        VIEW ASSET
+                    </a>
+                </div>
+
+                <div class="rank-row-glow"></div>
+            </li>
+            {% empty %}
+            <li class="empty-state">
+                <p>No rankings available in the current cycle.</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

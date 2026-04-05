@@ -1,0 +1,58 @@
+/* The White Popup Container */
+#bookmarklet {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; /* Covers the whole screen */
+    background-color: rgba(0,0,0,0.7); /* Dark semi-transparent background */
+    z-index: 999999999999;
+    overflow: auto;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* The Close Button (X) */
+#bookmarklet #close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 40px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+}
+
+/* The Title */
+#bookmarklet h1 {
+    color: #fff;
+    text-align: center;
+    margin: 20px;
+    font-size: 26px;
+}
+
+/* The Grid of Images */
+#bookmarklet .images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: #fff; /* This makes the inner area white */
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* Individual Images */
+#bookmarklet .images img {
+    margin: 10px;
+    border: 2px solid #ddd;
+    cursor: pointer;
+    transition: all 0.2s;
+    max-width: 200px;
+    max-height: 200px;
+}
+
+#bookmarklet .images img:hover {
+    border-color: #41b883; /* Green border on hover */
+    transform: scale(1.05);
+}

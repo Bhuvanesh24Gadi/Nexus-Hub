@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Create Account | Social Space{% endblock %}
+
+{% block content %}
+<div class="centered-auth-wrapper">
+    <div class="auth-container glass-panel register-box">
+        <h1 class="auth-header neon-text-blue">CREATE ACCOUNT</h1>
+        
+        <div class="auth-subtext">
+            <p>Please, sign up using the following form to join the network:</p>
+        </div>
+
+        <form method="post" class="high-tech-form">
+            {% csrf_token %}
+            
+            <div class="form-fields registration-fields">
+                {{ user_form.as_p }}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-mega-neon">
+                    INITIALIZE ACCOUNT
+                </button>
+            </div>
+        </form>
+
+        <div class="auth-footer">
+            <p>Already have a node? <a href="{% url 'login' %}" class="accent-link neon-text-purple">Log in here</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

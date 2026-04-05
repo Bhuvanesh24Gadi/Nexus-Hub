@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Capture | Bookmark Image{% endblock %}
+
+{% block content %}
+<div class="capture-container">
+    <header class="settings-header">
+        <h1 class="auth-header neon-text-emerald">IMAGE CAPTURE</h1>
+        <p class="auth-subtext">Save this discovery to your digital collection.</p>
+    </header>
+    
+    <div class="bookmark-workspace">
+        <div class="preview-panel glass-panel">
+            <div class="preview-header">
+                <span class="neon-dot-emerald">●</span> LIVE PREVIEW
+            </div>
+            <div class="image-frame-glow">
+                <img src="{{ request.GET.url }}" class="image-preview" alt="Preview">
+            </div>
+        </div>
+        
+        <div class="control-panel glass-panel">
+            <h3 class="section-title">Metadata Details</h3>
+            <form action="." method="post" class="high-tech-form">
+                <div class="form-fields">
+                    {{ form.as_p }}
+                </div>
+                {% csrf_token %}
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary-neon btn-emerald">
+                        <span class="btn-icon">⚡</span> BOOKMARK IT!
+                    </button>
+                    <a href="javascript:history.back()" class="btn-secondary-link">Cancel Scan</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

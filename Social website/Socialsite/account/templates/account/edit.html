@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Settings | Edit Account{% endblock %}
+
+{% block content %}
+<div class="centered-auth-wrapper">
+    <div class="auth-container glass-panel edit-profile-box">
+        
+        <header class="settings-header">
+            <h1 class="auth-header neon-text-blue">USER SETTINGS</h1>
+            <p class="auth-subtext">Update your profile information and digital identity.</p>
+        </header>
+
+        <form method="post" enctype="multipart/form-data" class="high-tech-form settings-form">
+            {% csrf_token %}
+            
+            <div class="form-section">
+                <h3 class="section-title neon-text-cyan">Account Details</h3>
+                <div class="field-group">
+                    {{ user_form.as_p }}
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-title neon-text-purple">Profile Customization</h3>
+                <div class="field-group">
+                    {{ profile_form.as_p }}
+                </div>
+            </div>
+
+            <div class="form-actions-row">
+                <button type="submit" class="btn-primary-neon">
+                    <span class="btn-icon">💾</span> SAVE CHANGES
+                </button>
+                <a href="{% url 'dashboard' %}" class="btn-secondary-glass">
+                    CANCEL
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} | Social Space</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+    <div id="app-container">
+        
+        <header id="header" class="glass-nav">
+            <div class="nav-content">
+                <span class="logo neon-text">Bookmarks</span>
+                
+                {% if request.user.is_authenticated %}
+                <nav class="menu-container">
+                    <ul class="menu">
+                        <li class="nav-item {% if section == 'dashboard' %}selected{% endif %}">
+                            <a href="{% url 'dashboard' %}">Dashboard</a>
+                        </li>
+                        <li class="nav-item {% if section == 'images' %}selected{% endif %}">
+                            <a href="{% url 'images:list' %}">Explore</a>
+                        </li>
+                        <li class="nav-item {% if section == 'people' %}selected{% endif %}">
+                            <a href="{% url 'user_list' %}">Community</a>
+                        </li>
+                    </ul>
+                </nav>
+                {% endif %}
+
+                <div class="user-controls">
+                    {% if request.user.is_authenticated %}
+                    <span class="user-greeting">
+                        Welcome, <span class="accent-color">{{ request.user.first_name|default:request.user.username }}</span>
+                    </span>
+                    <form action="{% url 'logout' %}" method="post" class="inline-form">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-logout-neon">LOGOUT</button>
+                    </form>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="btn-login-glow">LOG-IN</a>
+                    {% endif %}
+                </div>
+            </div>
+        </header>
+
+        {% if messages %}
+        <div class="message-overlay">
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="msg-card {{message.tags}}">
+                    <span class="msg-content">{{message|safe}}</span>
+                    <a href="#" class="close-btn">&times;</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <main id="content" class="main-wrapper">
+            <div class="content-glass-card">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </main>
+
+    </div>
+
+    <script src="//cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script>
+        const csrftoken = Cookies.get('csrftoken');  
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Close button logic for messages
+            const closeButtons = document.querySelectorAll('.close-btn');
+            closeButtons.forEach(btn => {
+                btn.onclick = () => btn.parentElement.style.display = 'none';
+            });
+
+            {% block domready %}
+            {% endblock %}
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Log-in | Social Space{% endblock %}
+
+{% block content %}
+<div class="centered-auth-wrapper">
+    <div class="auth-container glass-panel">
+        <h1 class="auth-header neon-text-blue">LOG IN</h1>
+        
+        <div class="auth-subtext">
+            <p>Welcome back! Please enter your details below.</p>
+            <p>New here? <a href="{% url 'register' %}" class="accent-link neon-text-purple">Register an account</a></p>
+        </div>
+
+        <form method="post" action="{% url 'login' %}" class="high-tech-form">
+            {% csrf_token %}
+            
+            <div class="form-fields">
+                {{ form.as_p }}
+            </div>
+
+            <input type="hidden" name="next" value="{{ next }}" />
+            
+            <div class="form-actions">
+                <button type="submit" class="btn-primary-neon full-width">SIGN IN</button>
+            </div>
+        </form>
+
+        <div class="social-section">
+            <div class="separator">
+                <span>OR CONTINUE WITH</span>
+            </div>
+            
+            <div class="external-auth">
+                <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn-google-glass">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" class="google-icon">
+                    <span>Log in with Google</span>
+                </a>
+            </div>
+
+            <div class="auth-footer">
+                <p>Forgot your password? <a href="{% url 'password_reset' %}" class="secondary-link">Reset it here</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block title %}Community | Digital Network{% endblock %}
+
+{% block content %}
+<div class="community-container">
+    <header class="settings-header">
+        <h1 class="auth-header neon-text-blue">DIGITAL NETWORK</h1>
+        <div class="status-indicator">
+            <span class="neon-dot-purple pulse">●</span> 
+            <span class="status-text">{{ users.count }} ACTIVE NODES</span>
+        </div>
+    </header>
+  
+    <div id="people-list" class="people-grid-layout">
+        {% for user in users %}
+            <div class="user-node-card glass-panel interactable">
+                <a href="{{ user.get_absolute_url }}" class="node-link">
+                    <div class="node-avatar-wrapper">
+                        {% if user.profile.photo %}
+                            <img src="{% thumbnail user.profile.photo 180x180 crop='smart' %}" alt="{{ user.username }}" class="node-profile-img circle-profile-border glow-purple">
+                        {% else %}
+                            <div class="node-avatar-placeholder glow-purple">
+                                {{ user.username|slice:":1"|upper }}
+                            </div>
+                        {% endif %}
+                        <div class="node-status-glow"></div>
+                    </div>
+                    
+                    <div class="node-info">
+                        <h3 class="node-name neon-text-blue">
+                            {{ user.first_name|default:user.username }}
+                        </h3>
+                        <p class="node-handle">@{{ user.username|lower }}</p>
+                        
+                        <div class="node-action-hint">
+                            <span class="btn-mini-glow">VIEW PROFILE</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <div class="node-corner-tl"></div>
+                <div class="node-corner-br"></div>
+            </div>
+        {% empty %}
+            <div class="empty-state-container glass-panel">
+                <p class="neon-text-dim">No users detected in the current sector.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
